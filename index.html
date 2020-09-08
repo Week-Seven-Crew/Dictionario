@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dictionario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+  </head>
+  <body class="has-background-primary-light">
+    <!-- Hero Start -->
+    <section class="hero">
+        <div class="container hero-body">
+            <div class="container">
+                <h1 class="title is-1">Dictionario</h1>
+                <h2 class="subtitle">Helping you find words you didn't know you were looking for</h2>
+            </div>
+        </div>
+    </section>
+    <!-- Hero End -->
+
+    <!-- Input Start -->
+    <div class="columns is-centered">
+            <div class="control has-icons-left">
+                <input class="input is-primary is-rounded is-focused" type="text" placeholder="Type word here">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-book"></i>
+                </span>              
+            </div>
+    </div>
+    <!-- Input End -->
+
+    <!-- API Output Containers Start -->
+    <div class="columns is-mobile is-multiline is-centered">
+        <!-- Definition -->
+        <div class="column is-narrow">
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="title">Definition</h2>
+                    <h3 class="subtitle">put definition here</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Synonym -->
+        <div class="column is-narrow">
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="title">Synonym</h2>
+                    <h3 class="subtitle">put synonym here</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hyponym -->
+        <div class="column is-narrow">
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="title">Hyponym</h2>
+                    <h3 class="subtitle">put hyponym here</h3>
+                </div>
+            </div>
+        </div>
+     </div>
+    <!-- API Output Containers End -->
+
+    <!-- Search History Container Start -->
+    <div class="columns is-centered">
+        <div class="section">
+            <div class="container">
+                <h1 class="title is-3">Past Searches</h1>
+                <div class="container" id="history-button-container">
+                    <!-- JS Generated History Button Goes Here -->
+                    <!-- Here is how a button should be formatted -->
+                    <!-- No ID has been attributed for the buttons -->
+                    <!-- so feel free to attribute whatever ID you want -->
+                    <button class="button is-text">Example Button</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search History Container End -->
+
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script type="text/javascript" src="lib/main.js"></script>
+  </body>
+</html>
