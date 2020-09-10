@@ -2,7 +2,8 @@
 var wordSearchFormEl = document.querySelector("#word-search-form");
 // select form input
 var wordInputEl = document.querySelector("#word-input");
-
+// select definition div
+var definitionContainerEl = document.querySelector("#definitions-container")
 
 // function to handle word search
 var wordSearch = function(event){
@@ -23,10 +24,28 @@ var wordSearch = function(event){
             response.json().then(function(data){
                 // retrieve the array of definitions for the word
                 var definitions = data.results;
-                console.log(definitions);
+                // clear out the text content in the definitions container
+                definitionContainerEl.innerHTML = "";
+                // for each definition
+                for (var i = 0; i < definitions.length; i++){
+                    // create a heading for the definition and append to div
+                    createDefinitionEl(definitions[i].definition);
+                }
             })
         }
     })
+}
+
+// function to create an element for a definition
+var createDefinitionEl = function(definition){
+    // create an h3
+    var defHeadingEl = document.createElement("h3");
+    // give it the subtitle class
+    defHeadingEl.classList = "subtitle";
+    // set its text content to the definition
+    defHeadingEl.textContent = definition;
+    // append the definition to the definition div
+    definitionContainerEl.appendChild(defHeadingEl);
 }
 
 // add submit event listener
