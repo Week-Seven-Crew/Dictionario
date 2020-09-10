@@ -6,7 +6,8 @@ var wordInputEl = document.querySelector("#word-input");
 var definitionContainerEl = document.querySelector("#definitions-container")
 // select synonym container div
 var synonymContainerEl = document.querySelector("#synonyms-container");
-
+// select type of container div
+var typeOfContainerEl = document.querySelector("#type-of-container");
 
 // function to handle word search
 var wordSearch = function(event){
@@ -17,6 +18,8 @@ var wordSearch = function(event){
     defintionFetch(word);
     // fetch the synonyms
     fetchSynonyms(word);
+    // fetch the type of
+    fetchTypeOf(word);
 }
 
 // function to perform word defintion fetch
@@ -33,14 +36,12 @@ var defintionFetch = function(word){
         if (response.ok){
             // convert response to json
             response.json().then(function(data){
-                // retrieve the array of definitions for the word
-                var definitions = data.results;
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
                 // for each definition
-                for (var i = 0; i < definitions.length; i++){
+                for (var i = 0; i < data.results.length; i++){
                     // create a heading for the definition and append to div
-                    createHeadingEl(definitions[i].definition, definitionContainerEl);
+                    createHeadingEl(data.results[i].definition, definitionContainerEl);
                 }
             })
         }
@@ -62,20 +63,44 @@ var fetchSynonyms = function(word){
             synonymContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function(data){
-                console.log(data);
-                // get the array of synonyms
-                var synonyms = data.synonyms;
                 // for each synonym
-                for (var i = 0; i < synonyms.length; i++){
+                for (var i = 0; i < data.synonyms.length; i++){
                     // create a heading for each synonym
-                    createHeadingEl(synonyms[i], synonymContainerEl);
+                    createHeadingEl(data.synonyms[i], synonymContainerEl);
                 }
             })
         }
     })
 }
 
-// function to create an element for a subtitle item
+// function to fetch type of information
+var fetchTypeOf = function(word){
+    // use the word to fetch
+    fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}/typeOf`, {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+            "x-rapidapi-key": "e2952ee466msh43fbf0a24fab1ddp1c8f69jsnfb29dc16feca"
+        }
+    }).then(function(response){
+        // check that fetch was successful
+        if (response.ok){
+            // clear typeof container
+            typeOfContainerEl.innerHTML = "";
+            // convert response to json
+            response.json().then(function(data){
+                console.log(data);
+                // for each type of
+                for (var i = 0; i < data.typeOf.length; i++){
+                    // create a heading for each type of
+                    createHeadingEl(data.typeOf[i], typeOfContainerEl);
+                }
+            })
+        }
+    })
+}
+
+// function to create an element for a heading/subtitle item
 var createHeadingEl = function(headItem, parentEl){
     // create an h3
     var headingEl = document.createElement("h3");
