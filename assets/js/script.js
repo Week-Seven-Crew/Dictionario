@@ -57,7 +57,8 @@ var defintionFetch = function (word) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
                 // for each definition
-                for (var i = 0; i < data.results.length; i++) {
+                // changed data.results.length to 5 to limit number of results
+                for (var i = 0; i < 5 /*data.results.length*/ ; i++) {
                     // create a heading for the definition and append to div
                     createHeadingEl(data.results[i].definition, definitionContainerEl);
                 }
@@ -120,12 +121,12 @@ var fetchTypeOf = function (word) {
     })
 }
 
-// function to create an element for a heading/subtitle item
+// function to create an element for a list item
 var createHeadingEl = function (headItem, parentEl) {
-    // create an h3
-    var headingEl = document.createElement("h3");
-    // give it the subtitle class
-    headingEl.classList = "subtitle";
+    // create a list item or "li" to go into <ol> "ordered list"
+    var headingEl = document.createElement("li");
+    // give it the "is-lower-alpha class
+    headingEl.classList = "mx-5";
     // set its text content to the definition
     headingEl.textContent = headItem;
     // append the definition to the definition div
