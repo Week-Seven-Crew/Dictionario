@@ -130,17 +130,6 @@ var createHeadingEl = function (headItem, parentEl) {
     parentEl.appendChild(headingEl);
 }
 
-// add submit event listener
-wordSearchFormEl.addEventListener("submit", wordSearch);
-
-
-
-
-
-
-
-
-
 //display previous searches
 var loadSearchHistory = function () {
     // set search values to local storage
@@ -174,5 +163,23 @@ var addbutton = function (word, parentContainer) {
     parentContainer.appendChild(wordButton);
 
 }
+var previousSearchHandler = function (event) {
+    //targeting the closest click 
+    var word = event.target.closest(".search-history").textContent;
+
+    // fetch the definition
+    defintionFetch(word);
+    // fetch the synonyms
+    fetchSynonyms(word);
+    // fetch the type of
+    fetchTypeOf(word);
+}
 
  loadSearchHistory(); 
+
+ // add submit event listener
+wordSearchFormEl.addEventListener("submit", wordSearch);
+
+//add event listener to the search history element 
+searchHistoryEl.addEventListener("click", previousSearchHandler);
+
