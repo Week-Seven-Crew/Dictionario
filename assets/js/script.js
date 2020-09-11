@@ -82,7 +82,8 @@ var fetchSynonyms = function (word) {
             // convert response to json
             response.json().then(function (data) {
                 // for each synonym
-                for (var i = 0; i < data.synonyms.length; i++) {
+                // changed data.synonyms.length to 5 to limit number of results
+                for (var i = 0; i < 5 /*data.synonyms.length*/ ; i++) {
                     // create a heading for each synonym
                     createHeadingEl(data.synonyms[i], synonymContainerEl);
                 }
@@ -109,7 +110,8 @@ var fetchTypeOf = function (word) {
             response.json().then(function (data) {
                 console.log(data);
                 // for each type of
-                for (var i = 0; i < data.typeOf.length; i++) {
+                // changed data.typeOf.length to 5 to limit number of results
+                for (var i = 0; i < 5 /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
                     createHeadingEl(data.typeOf[i], typeOfContainerEl);
                 }
