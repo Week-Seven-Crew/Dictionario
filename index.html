@@ -22,10 +22,12 @@
     <!-- Input Start -->
     <div class="columns is-centered">
             <div class="control has-icons-left">
-                <input class="input is-primary is-rounded is-focused" type="text" placeholder="Type word here">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-book"></i>
-                </span>              
+                <form id="word-search-form">
+                    <input id="word-input" class="input is-primary is-rounded is-focused" type="text" placeholder="Type word here">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-book"></i>
+                    </span>  
+                </form>              
             </div>
     </div>
     <!-- Input End -->
@@ -37,7 +39,9 @@
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Definition</h2>
-                    <h3 class="subtitle">put definition here</h3>
+                    <div id="definitions-container">
+                        <h3 class="subtitle">put definition here</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,7 +51,9 @@
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Synonym</h2>
-                    <h3 class="subtitle">put synonym here</h3>
+                    <div id="synonyms-container">
+                        <h3 class="subtitle">put synonym here</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,8 +62,10 @@
         <div class="column is-narrow">
             <div class="card">
                 <div class="card-content">
-                    <h2 class="title">Hyponym</h2>
-                    <h3 class="subtitle">put hyponym here</h3>
+                    <h2 class="title">Type Of</h2>
+                    <div id="type-of-container">
+                        <h3 class="subtitle">put type of here</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,13 +88,9 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-    <footer>Dont be upset.  Just testing</footer>
-=======
 
     <footer></footer>
 
->>>>>>> b315bb200aeaf9015b7892656261117b3b383fc8
     <!-- Search History Container End -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="./assets/js/script.js"></script>
