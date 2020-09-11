@@ -9,8 +9,11 @@ var synonymContainerEl = document.querySelector("#synonyms-container");
 // select type of container div
 var typeOfContainerEl = document.querySelector("#type-of-container");
 
+// create list to store searched words 
+var words = [];
+
 // function to handle word search
-var wordSearch = function(event){
+var wordSearch = function (event) {
     event.preventDefault();
     // get word from input
     var word = wordInputEl.value;
@@ -23,7 +26,7 @@ var wordSearch = function(event){
 }
 
 // function to perform word defintion fetch
-var defintionFetch = function(word){
+var defintionFetch = function (word) {
     // use the word to fetch from the api
     fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}`, {
         "method": "GET",
@@ -31,15 +34,26 @@ var defintionFetch = function(word){
             "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
             "x-rapidapi-key": "e2952ee466msh43fbf0a24fab1ddp1c8f69jsnfb29dc16feca"
         }
-    }).then(function(response){
+    }).then(function (response) {
         // check that the fetch was successful
-        if (response.ok){
+        if (response.ok) {
+            //check if word is already in the array 
+            if (!words.includes(word)) {
+                //adding new searched word to the array
+                words.push(word);
+                //call add button function 
+                
+                // putting user input to local storage
+                localStorage.setItem("words", JSON.stringify(words));
+
+            }
+
             // convert response to json
-            response.json().then(function(data){
+            response.json().then(function (data) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
                 // for each definition
-                for (var i = 0; i < data.results.length; i++){
+                for (var i = 0; i < data.results.length; i++) {
                     // create a heading for the definition and append to div
                     createHeadingEl(data.results[i].definition, definitionContainerEl);
                 }
@@ -49,22 +63,22 @@ var defintionFetch = function(word){
 }
 
 // function to fetch synonyms
-var fetchSynonyms = function(word){
+var fetchSynonyms = function (word) {
     fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}/synonyms`, {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
             "x-rapidapi-key": "e2952ee466msh43fbf0a24fab1ddp1c8f69jsnfb29dc16feca"
         }
-    }).then(function(response){
+    }).then(function (response) {
         // check that the fetch was successful
-        if (response.ok){
+        if (response.ok) {
             // clear inner html of synonym container
             synonymContainerEl.innerHTML = "";
             // convert response to json
-            response.json().then(function(data){
+            response.json().then(function (data) {
                 // for each synonym
-                for (var i = 0; i < data.synonyms.length; i++){
+                for (var i = 0; i < data.synonyms.length; i++) {
                     // create a heading for each synonym
                     createHeadingEl(data.synonyms[i], synonymContainerEl);
                 }
@@ -74,7 +88,7 @@ var fetchSynonyms = function(word){
 }
 
 // function to fetch type of information
-var fetchTypeOf = function(word){
+var fetchTypeOf = function (word) {
     // use the word to fetch
     fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}/typeOf`, {
         "method": "GET",
@@ -82,16 +96,16 @@ var fetchTypeOf = function(word){
             "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
             "x-rapidapi-key": "e2952ee466msh43fbf0a24fab1ddp1c8f69jsnfb29dc16feca"
         }
-    }).then(function(response){
+    }).then(function (response) {
         // check that fetch was successful
-        if (response.ok){
+        if (response.ok) {
             // clear typeof container
             typeOfContainerEl.innerHTML = "";
             // convert response to json
-            response.json().then(function(data){
+            response.json().then(function (data) {
                 console.log(data);
                 // for each type of
-                for (var i = 0; i < data.typeOf.length; i++){
+                for (var i = 0; i < data.typeOf.length; i++) {
                     // create a heading for each type of
                     createHeadingEl(data.typeOf[i], typeOfContainerEl);
                 }
@@ -101,7 +115,7 @@ var fetchTypeOf = function(word){
 }
 
 // function to create an element for a heading/subtitle item
-var createHeadingEl = function(headItem, parentEl){
+var createHeadingEl = function (headItem, parentEl) {
     // create an h3
     var headingEl = document.createElement("h3");
     // give it the subtitle class
@@ -114,3 +128,21 @@ var createHeadingEl = function(headItem, parentEl){
 
 // add submit event listener
 wordSearchFormEl.addEventListener("submit", wordSearch);
+
+
+
+//MY NEW CODE 
+
+var searchHistoryEl = document.querySelector("#word")
+
+
+
+
+
+//display previous searches
+var previousSearches = function () {
+    // set search values to local storage
+    words = JSON.parse(localStorage.getItem("words"));
+    console.log(words);
+
+}
