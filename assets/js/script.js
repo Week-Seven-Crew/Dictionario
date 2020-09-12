@@ -15,6 +15,11 @@ var searchHistoryEl = document.querySelector("#history-button-container")
 // create list to store searched words 
 var words = [];
 
+//modal container variable
+var modal = document.getElementById("page-modal");
+//modal close variable 
+var modalCloseEl = document.getElementById("modal-close"); 
+
 // function to handle word search
 var wordSearch = function (event) {
     event.preventDefault();
@@ -57,14 +62,26 @@ var defintionFetch = function (word) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
                 // for each definition
-                // changed data.results.length to 5 to limit number of results
-                for (var i = 0; i < 5 /*data.results.length*/ ; i++) {
+                for (var i = 0; i < data.results.length; i++) {
                     // create a heading for the definition and append to div
                     createHeadingEl(data.results[i].definition, definitionContainerEl);
                 }
             })
         }
+        else{
+                //make modal appear
+            modal.style.display = "block";
+            
+            
+
+        }
     })
+}
+
+//function to make modal disappear 
+var closeModal = function() {
+
+    modal.style.display = "none"; 
 }
 
 // function to fetch synonyms
@@ -83,8 +100,7 @@ var fetchSynonyms = function (word) {
             // convert response to json
             response.json().then(function (data) {
                 // for each synonym
-                // changed data.synonyms.length to 5 to limit number of results
-                for (var i = 0; i < 5 /*data.synonyms.length*/ ; i++) {
+                for (var i = 0; i < data.synonyms.length; i++) {
                     // create a heading for each synonym
                     createHeadingEl(data.synonyms[i], synonymContainerEl);
                 }
@@ -111,8 +127,7 @@ var fetchTypeOf = function (word) {
             response.json().then(function (data) {
                 console.log(data);
                 // for each type of
-                // changed data.typeOf.length to 5 to limit number of results
-                for (var i = 0; i < 5 /*data.typeOf.length*/ ; i++) {
+                for (var i = 0; i < data.typeOf.length; i++) {
                     // create a heading for each type of
                     createHeadingEl(data.typeOf[i], typeOfContainerEl);
                 }
@@ -121,12 +136,12 @@ var fetchTypeOf = function (word) {
     })
 }
 
-// function to create an element for a list item
+// function to create an element for a heading/subtitle item
 var createHeadingEl = function (headItem, parentEl) {
-    // create a list item or "li" to go into <ol> "ordered list"
-    var headingEl = document.createElement("li");
-    // give it the "is-lower-alpha class
-    headingEl.classList = "mx-5";
+    // create an h3
+    var headingEl = document.createElement("h3");
+    // give it the subtitle class
+    headingEl.classList = "subtitle";
     // set its text content to the definition
     headingEl.textContent = headItem;
     // append the definition to the definition div
@@ -166,8 +181,8 @@ var addbutton = function (word, parentContainer) {
     parentContainer.appendChild(wordButton);
 
 }
+// making the previous searches clickable 
 var previousSearchHandler = function (event) {
-    //targeting the closest click 
     var word = event.target.closest(".search-history").textContent;
 
     // fetch the definition
