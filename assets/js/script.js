@@ -30,6 +30,8 @@ var wordSearch = function (event) {
     fetchTypeOf(word);
     // use the word to search the book api
     fetchBooks(word);
+    // use the word to search the movie api
+    fetchMovies(word);
 }
 
 // function to perform word defintion fetch
@@ -62,7 +64,11 @@ var defintionFetch = function (word) {
                 definitionContainerEl.innerHTML = "";
                 // for each definition
                 // changed data.results.length to 5 to limit number of results
-                for (var i = 0; i < 5 /*data.results.length*/ ; i++) {
+                var length = data.results.length;
+                if (length > 5){
+                    length = 5;
+                }
+                for (var i = 0; i < length /*data.results.length*/ ; i++) {
                     // create a heading for the definition and append to div
                     createHeadingEl(data.results[i].definition, definitionContainerEl);
                 }
@@ -88,7 +94,11 @@ var fetchSynonyms = function (word) {
             response.json().then(function (data) {
                 // for each synonym
                 // changed data.synonyms.length to 5 to limit number of results
-                for (var i = 0; i < 5 /*data.synonyms.length*/ ; i++) {
+                var length = data.synonyms.length;
+                if (length > 5){
+                    length = 5;
+                }
+                for (var i = 0; i < length /*data.synonyms.length*/ ; i++) {
                     // create a heading for each synonym
                     createHeadingEl(data.synonyms[i], synonymContainerEl);
                 }
@@ -116,7 +126,11 @@ var fetchTypeOf = function (word) {
                 //console.log(data);
                 // for each type of
                 // changed data.typeOf.length to 5 to limit number of results
-                for (var i = 0; i < 5 /*data.typeOf.length*/ ; i++) {
+                var length = data.typeOf.length;
+                if (length > 5){
+                    length = 5;
+                }
+                for (var i = 0; i < length /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
                     createHeadingEl(data.typeOf[i], typeOfContainerEl);
                 }
@@ -130,12 +144,11 @@ var fetchBooks = function(word){
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${word}`).then(function(response){
         // check that the fetch was successful
         if (response.ok){
-            console.log("if");
             // clear book div innter html
             bookContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
-                console.log(data);
+                //console.log(data);
                 // create div to display number of books with that word in the title
                 var bookNumberEl = document.createElement("h1");
                 bookNumberEl.classList = "content is-medium";
@@ -158,6 +171,20 @@ var fetchBooks = function(word){
                     }
                     createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
                 }
+            })
+        }
+    })
+}
+
+// function to fetch movies
+var fetchMovies = function(word){
+    // use the word to fetch movies
+    fetch(`https://api.themoviedb.org/3/search/keyword?api_key=ea14eb13d395f8e6500e26ec4547d879&query=${word}&page=1`).then(function(response){
+        // check that the fetch was successful
+        if (response.ok){
+            // convert to json
+            response.json().then(function(data){
+                console.log(data);
             })
         }
     })
