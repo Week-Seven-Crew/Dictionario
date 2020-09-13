@@ -131,18 +131,33 @@ var fetchBooks = function(word){
         // check that the fetch was successful
         if (response.ok){
             console.log("if");
+            // clear book div innter html
+            bookContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
                 console.log(data);
-                // clear book div innter html
-                bookContainerEl.innerHTML = "";
-                // display number of books with that word in the title
+                // create div to display number of books with that word in the title
                 var bookNumberEl = document.createElement("h1");
                 bookNumberEl.classList = "content is-medium";
-                bookNumberEl.textContent = `There are ${data.totalItems} books with that word in the title`;
+                bookNumberEl.textContent = `There are ${data.totalItems} books with that word in the title.`;
                 // append number of books to container
                 bookContainerEl.appendChild(bookNumberEl);
                 // display list of five books with link to the google page
+                for (var i = 0; i < 5; i++){
+                    var authors = "";
+                    for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
+                        // if the last item in the list and the list does not only have one item
+                        if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
+                            authors += ", and ";
+                        } 
+                        // if not the first item in the list, add a comma and space
+                        else if (j != 0){
+                            authors += ", ";
+                        }
+                        authors += data.items[i].volumeInfo.authors[j];
+                    }
+                    createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
+                }
             })
         }
     })
