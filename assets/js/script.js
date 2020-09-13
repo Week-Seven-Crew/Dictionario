@@ -8,6 +8,8 @@ var definitionContainerEl = document.querySelector("#definitions-container")
 var synonymContainerEl = document.querySelector("#synonyms-container");
 // select type of container div
 var typeOfContainerEl = document.querySelector("#type-of-container");
+// select book container div
+var bookContainerEl = document.querySelector("#book-container");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -26,6 +28,8 @@ var wordSearch = function (event) {
     fetchSynonyms(word);
     // fetch the type of
     fetchTypeOf(word);
+    // use the word to search the book api
+    fetchBooks(word);
 }
 
 // function to perform word defintion fetch
@@ -109,13 +113,36 @@ var fetchTypeOf = function (word) {
             typeOfContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
-                console.log(data);
+                //console.log(data);
                 // for each type of
                 // changed data.typeOf.length to 5 to limit number of results
                 for (var i = 0; i < 5 /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
                     createHeadingEl(data.typeOf[i], typeOfContainerEl);
                 }
+            })
+        }
+    })
+}
+
+var fetchBooks = function(word){
+    // use the word to fetch books
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${word}`).then(function(response){
+        // check that the fetch was successful
+        if (response.ok){
+            console.log("if");
+            // convert to json
+            response.json().then(function(data){
+                console.log(data);
+                // clear book div innter html
+                bookContainerEl.innerHTML = "";
+                // display number of books with that word in the title
+                var bookNumberEl = document.createElement("h1");
+                bookNumberEl.classList = "content is-medium";
+                bookNumberEl.textContent = `There are ${data.totalItems} books with that word in the title`;
+                // append number of books to container
+                bookContainerEl.appendChild(bookNumberEl);
+                // display list of five books with link to the google page
             })
         }
     })
