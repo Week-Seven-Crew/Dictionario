@@ -10,6 +10,8 @@ var synonymContainerEl = document.querySelector("#synonyms-container");
 var typeOfContainerEl = document.querySelector("#type-of-container");
 // select book container div
 var bookContainerEl = document.querySelector("#book-container");
+// select the movie container div
+var movieContainerEl = document.querySelector("#movie-container");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -155,6 +157,11 @@ var fetchBooks = function(word){
                 bookNumberEl.textContent = `There are ${data.totalItems} books with that word in the title.`;
                 // append number of books to container
                 bookContainerEl.appendChild(bookNumberEl);
+                var length = data.items.length;
+                //console.log("length", length, "data", data.items);
+                if (length > 5){
+                    length = 5;
+                }
                 // display list of five books with link to the google page
                 for (var i = 0; i < 5; i++){
                     var authors = "";
@@ -179,12 +186,26 @@ var fetchBooks = function(word){
 // function to fetch movies
 var fetchMovies = function(word){
     // use the word to fetch movies
-    fetch(`https://api.themoviedb.org/3/search/keyword?api_key=ea14eb13d395f8e6500e26ec4547d879&query=${word}&page=1`).then(function(response){
+    fetch(`https://api.themoviedb.org/3/search/movie?api_key=ea14eb13d395f8e6500e26ec4547d879&language=en-US&query=${word}&page=1&include_adult=false`).then(function(response){
         // check that the fetch was successful
         if (response.ok){
             // convert to json
             response.json().then(function(data){
-                console.log(data);
+                //console.log(data);
+                // create div to display number of movies with that word in the title
+                var movieNumberEl = document.createElement("h1");
+                movieNumberEl.classList = "content is-medium";
+                movieNumberEl.textContent = `There are ${data.total_results} movies returned with that word in the title.`;
+                // append number of movies to container
+                movieContainerEl.appendChild(movieNumberEl);
+                var length = data.results.length;
+                if (length > 5){
+                    length = 5;
+                }
+                // display list of five movie 
+                for (var i = 0; i < length; i++){
+                    createHeadingEl(`${data.results[i].title} from ${data.results[i].release_date}`, movieContainerEl);
+                }
             })
         }
     })
