@@ -24,6 +24,11 @@ var wordSearch = function (event) {
     event.preventDefault();
     // get word from input
     var word = wordInputEl.value;
+    // fetch all necessary information
+    allWordFetches(word);
+}
+
+var allWordFetches = function(word){
     // fetch the definition
     defintionFetch(word);
     // fetch the synonyms
@@ -34,6 +39,8 @@ var wordSearch = function (event) {
     fetchBooks(word);
     // use the word to search the movie api
     fetchMovies(word);
+    // use the word to search the 
+    //fetchSongs(word);
 }
 
 // function to perform word defintion fetch
@@ -165,6 +172,8 @@ var fetchBooks = function(word){
                 // display list of five books with link to the google page
                 for (var i = 0; i < 5; i++){
                     var authors = "";
+                    var authorArry = data.items[i].volumeInfo.authors;
+                    console.log(authorArry.length);
                     for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
                         // if the last item in the list and the list does not only have one item
                         if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
@@ -210,6 +219,36 @@ var fetchMovies = function(word){
         }
     })
 }
+
+// function to fetch songs
+//var fetchSongs = function(word){
+    // fetch(`https://api.spotify.com/v1/search?q=${word}&type=track`, {
+    //         method: 'GET', headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + accessToken
+    //         }
+    //     })
+    // musixmatch api key b4d63fd472cf398fa80055160d8b3f36	
+    // fetch(`http://api.digitalpodcast.com/v2r/search/?appid=6dbaef127068f010649588b11f577daf&keywords=${word}`, {
+    //     mode: 'no-cors'}).then(function(response){
+    //     // check that the fetch was successful
+    //     if (response.ok){
+    //         // convert to json
+    //         response.json().then(function(data){
+    //             console.log(data);
+    //         })
+    //     }
+    // })
+//     fetch(`http://api.musixmatch.com/ws/1.1/track.search?f_has_lyrics=${word}`).then(function(response){
+//         if (response.ok){
+//             // convert to json
+//             response.json().then(function(data){
+//                 console.log(data);
+//             })
+//         }
+//     })
+// }
 
 // function to create an element for a list item
 var createHeadingEl = function (headItem, parentEl) {
@@ -260,12 +299,8 @@ var previousSearchHandler = function (event) {
     //targeting the closest click 
     var word = event.target.closest(".search-history").textContent;
 
-    // fetch the definition
-    defintionFetch(word);
-    // fetch the synonyms
-    fetchSynonyms(word);
-    // fetch the type of
-    fetchTypeOf(word);
+    // fetch all necessary information
+    allWordFetches(word);
 }
 
  loadSearchHistory(); 
