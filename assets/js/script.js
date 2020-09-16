@@ -89,16 +89,15 @@ var defintionFetch = function (word) {
             })
         }
         else{
-                //make modal appear
-            modal.style.display = "block";
+            // make modal appear by changing class to is-active
+            modal.className = "modal is-active"
         }
     })
 }
 
-//function to make modal disappear 
+//function to make modal disappear by changing class to just modal
 var closeModal = function() {
-
-    modal.style.display = "none"; 
+    modal.className = "modal"
 }
 
 // function to fetch synonyms

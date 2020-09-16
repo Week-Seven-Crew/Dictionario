@@ -13,34 +13,35 @@
         <div class="container hero-body">
             <div class="container">
                 <h1 class="title is-1">Dictionario</h1>
-                <h2 class="subtitle">Helping you find words you didn't know you were looking for</h2>
+                <h2 class="subtitle mt-1">Helping you find words you didn't know you were looking for</h2>
             </div>
         </div>
     </section>
     <!-- Hero End -->
 
     <!-- Input Start -->
-    <div class="columns is-centered mb-6">
-        <div class="control has-icons-left">
-            <form id="word-search-form">
-                <input id="word-input" class="input is-primary is-rounded is-focused" type="text" placeholder="Type word here">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-book"></i>
-                </span>  
-            </form>              
+    <div class="columns">
+        <div class="column center-children">
+            <form class="container form" id="word-search-form">
+                <div class="field">
+                    <div class="control has-icons-left mx-6">
+                        <input id="word-input" class="input is-rounded is-focused center" type="text" placeholder="Type word here">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-book"></i>
+                        </span>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <!-- Input End -->
 
     <!-- Word Searched Start -->
-    <div class="columns is-centered">
-        <div class="column is-narrow">
+    <div class="columns is-centered mx-6">
+        <div class="column is-narrow mx-4">
             <div class="card">
                 <div class="card-content">
-                    <h2 class="title">Word</h2>
-                    <h2 type="a" id="word-container">
-                        <h1 class="content is-medium" type="a"></h1>
-                    </h2>
+                    <h1 class="title content is-large" type="a">example</h1>
                 </div>
             </div>
         </div>
@@ -49,30 +50,28 @@
 
     <!-- Alert Modal Start -->
     <div class="modal" id="page-modal">
-        <div class="modal-background"></div>
+        <div class="modal-background" id="modal-close" onclick="closeModal()"></div>
         <div class="modal-content">
             <div class="card">
-                <div class="card-content">
-                    <section class="hero">
-                        <div class="container hero-body">
-                            <div class="container">
-                                <h1 class="title is-1">Word not found.</h1>
-                                <h2 class="subtitle error-container"></h2>
-                            </div>
+                <button class="modal-close delete" aria-label="close" id="modal-close" onclick="closeModal()"></button>
+                <div class="modal-card-body">
+                    <div class="container">
+                        <div class="container has-text-centered">
+                            <h1 class="title is-1">WORD NOT FOUND</h1>
+                            <h2 class="subtitle error-container">maybe it's mispelled</h2>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
         </div>
-        <button class="modal-close is-large" aria-label="close" id="modal-close" onclick="closeModal()"></button>
     </div>
     <!-- Alert Modal End -->
 
     <!-- API Output Containers Start -->
     <!-- Definition -->
-    <div class="columnsis-mobile is-centered">
+    <div class="columns is-mobile is-centered mx-6">
         <!-- Definition -->
-        <div class="column mx-6">
+        <div class="column mx-4">
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Definition</h2>
@@ -85,9 +84,9 @@
     </div>
 
     <!-- Synonym / Hyponym Container -->
-    <div class="columnsis-centered is-vcentered mx-6 mb-4">
+    <div class="columns is-centered is-vcentered mx-6 mb-4">
         <!-- Synonym -->
-        <div class="column">
+        <div class="column mx-4">
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Synonym</h2>
@@ -99,7 +98,7 @@
         </div>
 
         <!-- Hyponym -->
-        <div class="column">
+        <div class="column mx-4">
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Type Of</h2>
@@ -115,7 +114,7 @@
     <!-- Bonus Boxes Start -->
     <div class="columns is-vcentered is-centered mx-6">
         <!-- Box no.1 -->
-        <div class="column">
+        <div class="column mx-4">
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Books</h2>
@@ -126,7 +125,7 @@
             </div>
         </div>
         <!-- Box no.2 -->
-        <div class="column">
+        <div class="column mx-4">
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Movies</h2>
@@ -137,7 +136,7 @@
             </div>
         </div>
         <!-- Box no.3 -->
-        <div class="column">
+        <div class="column mx-4">
             <div class="card">
                 <div class="card-content">
                     <h2 class="title">Statistics</h2>

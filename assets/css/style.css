@@ -25,3 +25,28 @@ min-height: 100%;
     text-align: center;
     padding: 1rem;
 }
+
+.title {
+    text-align: center;
+}
+
+.input {
+    width: auto;
+}
+
+.control {
+    width: 200px;
+}
+
+.field {
+    width: 300px;
+}
+
+.form, .field, .control {
+    display: inline;
+    float: none;
+}
+
+.center-children {
+    text-align: center;
+}
