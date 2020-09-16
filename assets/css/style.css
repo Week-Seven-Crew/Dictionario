@@ -17,6 +17,15 @@ body{
 min-height: 100%;
 }
 
+.has-background-image { 
+    background-image:  url(../images/dictionary3.jpg);
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
+    background-color: #999;
+}
+
 .footer {
     position: fixed;
     left: 0;
@@ -49,4 +58,21 @@ min-height: 100%;
 
 .center-children {
     text-align: center;
+}
+
+.has-text-shadow {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.has-box-shadow {
+    box-shadow: 2px 2px 4px #000000;
+}
+
+.card {
+    background-color: rgba(255,255,255, 0.95);
+}
+
+.past-search-container {
+    width: 60%;
 }

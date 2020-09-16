@@ -311,7 +311,7 @@ var addbutton = function (word, parentContainer) {
     // creating an element for button 
     var wordButton = document.createElement("button"); 
     //adding classes to our created element
-    wordButton.classList = "button is-text search-history";
+    wordButton.classList = "button is-light is-rounded mx-1 search-history";
     //adding whatever is in the word variable as text to the wordbutton variable 
     wordButton.textContent = word; 
     //making it show on the page

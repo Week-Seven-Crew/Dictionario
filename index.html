@@ -4,34 +4,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dictionario</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
   </head>
-  <body class="has-background-primary-light">
+  <body class="has-background-image">
     <!-- Hero Start -->
-    <section class="hero">
-        <div class="container hero-body">
-            <div class="container">
-                <h1 class="title is-1">Dictionario</h1>
-                <h2 class="subtitle mt-1">Helping you find words you didn't know you were looking for</h2>
-            </div>
-        </div>
-    </section>
-    <!-- Hero End -->
-
-    <!-- Input Start -->
-    <div class="columns">
-        <div class="column center-children">
-            <form class="container form" id="word-search-form">
-                <div class="field">
-                    <div class="control has-icons-left mx-6">
-                        <input id="word-input" class="input is-rounded is-focused center" type="text" placeholder="Type word here">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-book"></i>
-                        </span>
-                    </div>
+    <div class="container">
+        <section class="hero">
+            <div class="container hero-body">
+                <div class="container">
+                    <h1 class="has-text-shadow title is-1 has-text-white">Dictionario</h1>
+                    <h2 class="has-text-shadow subtitle is-4 has-text-white">Helping you find words you didn't know you were looking for</h2>
                 </div>
-            </form>
+            </div>
+        </section>
+        <!-- Hero End -->
+
+        <!-- Input Start -->
+        <div class="columns mb-5">
+            <div class="column center-children">
+                <form class="container form" id="word-search-form">
+                    <div class="field">
+                        <div class="control has-icons-left mx-6">
+                            <input id="word-input" class="input is-rounded is-focused center" type="text" placeholder="Type word here">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-book"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <!-- Input End -->
@@ -39,7 +42,7 @@
     <!-- Word Searched Start -->
     <div class="columns is-centered mx-6">
         <div class="column is-narrow mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h1 class="title content is-large" type="a">example</h1>
                 </div>
@@ -52,7 +55,7 @@
     <div class="modal" id="page-modal">
         <div class="modal-background" id="modal-close" onclick="closeModal()"></div>
         <div class="modal-content">
-            <div class="card">
+            <div class="card ">
                 <button class="modal-close delete" aria-label="close" id="modal-close" onclick="closeModal()"></button>
                 <div class="modal-card-body">
                     <div class="container">
@@ -72,7 +75,7 @@
     <div class="columns is-mobile is-centered mx-6">
         <!-- Definition -->
         <div class="column mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h2 class="title">Definition</h2>
                     <ol type="a" id="definitions-container">
@@ -87,11 +90,11 @@
     <div class="columns is-centered is-vcentered mx-6 mb-4">
         <!-- Synonym -->
         <div class="column mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h2 class="title">Synonym</h2>
                     <ol type="a" id="synonyms-container">
-                        <h1 class="content is-medium" type="a">a word having the same or nearly the same meaning as another in the same language</h1>
+                        <h1 class="content is-medium" type="a">a word having the same or nearly the same meaning as another</h1>
                     </ol>
                 </div>
             </div>
@@ -99,7 +102,7 @@
 
         <!-- Hyponym -->
         <div class="column mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h2 class="title">Type Of</h2>
                     <ol type="a" id="type-of-container">
@@ -115,29 +118,29 @@
     <div class="columns is-vcentered is-centered mx-6">
         <!-- Box no.1 -->
         <div class="column mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h2 class="title">Books</h2>
                     <h2 type="a" id="book-container">
-                        <h1 class="content is-medium" type="a">a written or printed work consisting of pages glued or sewn together along one side and bound in covers</h1>
+                        <h1 class="content is-medium" type="a">a written or printed work consisting of pages glued or sewn together along one side</h1>
                     </h2>
                 </div>
             </div>
         </div>
         <!-- Box no.2 -->
         <div class="column mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h2 class="title">Movies</h2>
                     <h2 type="a" id="movie-container">
-                        <h1 class="content is-medium" type="a">a story or event recorded by a camera as a set of moving images and shown in a theater or on television</h1>
+                        <h1 class="content is-medium" type="a">a story or event recorded by a camera as a set of moving images and accompanying audio</h1>
                     </h2>
                 </div>
             </div>
         </div>
         <!-- Box no.3 -->
         <div class="column mx-4">
-            <div class="card">
+            <div class="card has-box-shadow">
                 <div class="card-content">
                     <h2 class="title">Statistics</h2>
                     <h2 type="a" id="stats-container">
@@ -152,9 +155,9 @@
     <!-- Search History Container Start -->
     <div class="columns is-centered">
         <div class="section">
-            <div class="container">
-                <h1 class="title is-3 has-text-centered">Past Searches</h1>
-                <div class="container" id="history-button-container">
+            <div class="container past-search-container">
+                <h1 class="title is-3 has-text-centered has-text-white has-text-shadow">Past Searches</h1>
+                <div class="container buttons are-medium" id="history-button-container">
                     <!-- JS Generated History Button Goes Here -->
                     <!-- Here is how a button should be formatted -->
                     <!-- <button class="button is-text">Example Button</button> -->
