@@ -91,9 +91,6 @@ var defintionFetch = function (word) {
         else{
                 //make modal appear
             modal.style.display = "block";
-            
-            
-
         }
     })
 }
