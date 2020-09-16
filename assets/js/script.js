@@ -29,13 +29,11 @@ var wordSearch = function (event) {
     event.preventDefault();
     // get word from input
     var word = wordInputEl.value;
-    // fetch all necessary information
-    allWordFetches(word);
-}
-
-var allWordFetches = function(word){
     // fetch the definition
     defintionFetch(word);
+}
+
+var additionalWordFetches = function(word){
     // fetch the synonyms
     fetchSynonyms(word);
     // fetch the type of
@@ -60,6 +58,8 @@ var defintionFetch = function (word) {
     }).then(function (response) {
         // check that the fetch was successful
         if (response.ok) {
+            // fetch all necessary information
+            additionalWordFetches(word);
             word = word.toLowerCase().trim();
             //check if word is already in the array 
             if (!words.includes(word)) {
@@ -325,9 +325,8 @@ var addbutton = function (word, parentContainer) {
 // making the previous searches clickable 
 var previousSearchHandler = function (event) {
     var word = event.target.closest(".search-history").textContent;
-
-    // fetch all necessary information
-    allWordFetches(word);
+    // fetch the definition
+    defintionFetch(word);
 }
 
  loadSearchHistory(); 
