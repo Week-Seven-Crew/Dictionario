@@ -173,19 +173,25 @@ var fetchBooks = function(word){
                 for (var i = 0; i < 5; i++){
                     var authors = "";
                     var authorArry = data.items[i].volumeInfo.authors;
-                    console.log(authorArry.length);
-                    for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
-                        // if the last item in the list and the list does not only have one item
-                        if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
-                            authors += ", and ";
-                        } 
-                        // if not the first item in the list, add a comma and space
-                        else if (j != 0){
-                            authors += ", ";
+                    //console.log(authorArry.length);
+                    // if the author array is defined, display authors
+                    if (authorArry){
+                        for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
+                            // if the last item in the list and the list does not only have one item
+                            if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
+                                authors += ", and ";
+                            } 
+                            // if not the first item in the list, add a comma and space
+                            else if (j != 0){
+                                authors += ", ";
+                            }
+                            authors += data.items[i].volumeInfo.authors[j];
                         }
-                        authors += data.items[i].volumeInfo.authors[j];
+                        createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
+                    } else {
+                        createHeadingEl(`${data.items[i].volumeInfo.title}`, bookContainerEl);
                     }
-                    createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
+                    
                 }
             })
         }
