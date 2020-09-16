@@ -1,6 +1,14 @@
+:root{
+    --color1: #1b262c;
+    --color2: #0f4c75;
+    --color3: #3282b8;
+    --color4: #bbe1fa;
+}
+
 body {
     /* font-family: "Comic Sans MS", cursive, sans-serif; */
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    /* font-family: "Trebuchet MS", Helvetica, sans-serif; */
+    font-family: 'Libre Baskerville', serif;
 }
 
 /* makes the page span all the way to the bottom of the screen */
@@ -15,6 +23,15 @@ height: 100%;
 
 body{
 min-height: 100%;
+}
+
+.has-text-shadow {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.hero {
+    color: var(--color1);
 }
 
 .has-background-image { 
@@ -33,10 +50,6 @@ min-height: 100%;
     width: 100%;
     text-align: center;
     padding: 1rem;
-}
-
-.title {
-    text-align: center;
 }
 
 .input {
@@ -60,11 +73,6 @@ min-height: 100%;
     text-align: center;
 }
 
-.has-text-shadow {
-    color: white;
-    text-shadow: 2px 2px 4px #000000;
-}
-
 .has-box-shadow {
     box-shadow: 2px 2px 4px #000000;
 }
@@ -74,5 +82,35 @@ min-height: 100%;
 }
 
 .past-search-container {
-    width: 60%;
+    width: 70%;
+}
+
+.section-small-padding {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.has-background-gradient {
+    background: linear-gradient(90deg, rgba(5,102,118,1) 0%, rgba(94,170,168,1) 50%, rgba(163,210,202,1) 100%);
+}
+
+.stripe {
+    background: linear-gradient(180deg, var(--color1) 25%, var(--color2) 50%, var(--color3) 75%, var(--color4) 95%, var(--color4) 100%);
+}
+
+.outer {
+    background-size: cover;
+    padding: 0;
+}
+
+.margin-zero {
+    margin: 0;
+}
+
+.color-4 {
+    background-color: var(--color4);
+}
+
+.bottom {
+    padding-bottom: .75rem;
 }
