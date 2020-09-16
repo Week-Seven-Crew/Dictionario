@@ -8,6 +8,10 @@ var definitionContainerEl = document.querySelector("#definitions-container")
 var synonymContainerEl = document.querySelector("#synonyms-container");
 // select type of container div
 var typeOfContainerEl = document.querySelector("#type-of-container");
+// select book container div
+var bookContainerEl = document.querySelector("#book-container");
+// select the movie container div
+var movieContainerEl = document.querySelector("#movie-container");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -25,12 +29,23 @@ var wordSearch = function (event) {
     event.preventDefault();
     // get word from input
     var word = wordInputEl.value;
+    // fetch all necessary information
+    allWordFetches(word);
+}
+
+var allWordFetches = function(word){
     // fetch the definition
     defintionFetch(word);
     // fetch the synonyms
     fetchSynonyms(word);
     // fetch the type of
     fetchTypeOf(word);
+    // use the word to search the book api
+    fetchBooks(word);
+    // use the word to search the movie api
+    fetchMovies(word);
+    // use the word to search the 
+    //fetchSongs(word);
 }
 
 // function to perform word defintion fetch
@@ -62,7 +77,12 @@ var defintionFetch = function (word) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
                 // for each definition
-                for (var i = 0; i < data.results.length; i++) {
+                // changed data.results.length to 5 to limit number of results
+                var length = data.results.length;
+                if (length > 5){
+                    length = 5;
+                }
+                for (var i = 0; i < length /*data.results.length*/ ; i++) {
                     // create a heading for the definition and append to div
                     createHeadingEl(data.results[i].definition, definitionContainerEl);
                 }
@@ -100,7 +120,12 @@ var fetchSynonyms = function (word) {
             // convert response to json
             response.json().then(function (data) {
                 // for each synonym
-                for (var i = 0; i < data.synonyms.length; i++) {
+                // changed data.synonyms.length to 5 to limit number of results
+                var length = data.synonyms.length;
+                if (length > 5){
+                    length = 5;
+                }
+                for (var i = 0; i < length /*data.synonyms.length*/ ; i++) {
                     // create a heading for each synonym
                     createHeadingEl(data.synonyms[i], synonymContainerEl);
                 }
@@ -125,9 +150,14 @@ var fetchTypeOf = function (word) {
             typeOfContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
-                console.log(data);
+                //console.log(data);
                 // for each type of
-                for (var i = 0; i < data.typeOf.length; i++) {
+                // changed data.typeOf.length to 5 to limit number of results
+                var length = data.typeOf.length;
+                if (length > 5){
+                    length = 5;
+                }
+                for (var i = 0; i < length /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
                     createHeadingEl(data.typeOf[i], typeOfContainerEl);
                 }
@@ -136,7 +166,118 @@ var fetchTypeOf = function (word) {
     })
 }
 
-// function to create an element for a heading/subtitle item
+// function to fetch books
+var fetchBooks = function(word){
+    // use the word to fetch books
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${word}`).then(function(response){
+        // check that the fetch was successful
+        if (response.ok){
+            // clear book div innter html
+            bookContainerEl.innerHTML = "";
+            // convert to json
+            response.json().then(function(data){
+                //console.log(data);
+                // create div to display number of books with that word in the title
+                var bookNumberEl = document.createElement("h1");
+                bookNumberEl.classList = "content is-medium";
+                bookNumberEl.textContent = `There are ${data.totalItems} books with that word in the title.`;
+                // append number of books to container
+                bookContainerEl.appendChild(bookNumberEl);
+                var length = data.items.length;
+                //console.log("length", length, "data", data.items);
+                if (length > 5){
+                    length = 5;
+                }
+                // display list of five books with link to the google page
+                for (var i = 0; i < 5; i++){
+                    var authors = "";
+                    var authorArry = data.items[i].volumeInfo.authors;
+                    //console.log(authorArry.length);
+                    // if the author array is defined, display authors
+                    if (authorArry){
+                        for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
+                            // if the last item in the list and the list does not only have one item
+                            if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
+                                authors += ", and ";
+                            } 
+                            // if not the first item in the list, add a comma and space
+                            else if (j != 0){
+                                authors += ", ";
+                            }
+                            authors += data.items[i].volumeInfo.authors[j];
+                        }
+                        createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
+                    } else {
+                        createHeadingEl(`${data.items[i].volumeInfo.title}`, bookContainerEl);
+                    }
+                    
+                }
+            })
+        }
+    })
+}
+
+// function to fetch movies
+var fetchMovies = function(word){
+    // use the word to fetch movies
+    fetch(`https://api.themoviedb.org/3/search/movie?api_key=ea14eb13d395f8e6500e26ec4547d879&language=en-US&query=${word}&page=1&include_adult=false`).then(function(response){
+        // check that the fetch was successful
+        if (response.ok){
+            // clear the inner html of the container
+            movieContainerEl.innerHTML = "";
+            // convert to json
+            response.json().then(function(data){
+                //console.log(data);
+                // create div to display number of movies with that word in the title
+                var movieNumberEl = document.createElement("h1");
+                movieNumberEl.classList = "content is-medium";
+                movieNumberEl.textContent = `There are ${data.total_results} movies returned with that word in the title.`;
+                // append number of movies to container
+                movieContainerEl.appendChild(movieNumberEl);
+                var length = data.results.length;
+                if (length > 5){
+                    length = 5;
+                }
+                // display list of five movie 
+                for (var i = 0; i < length; i++){
+                    createHeadingEl(`${data.results[i].title} from ${data.results[i].release_date}`, movieContainerEl);
+                }
+            })
+        }
+    })
+}
+
+// function to fetch songs
+//var fetchSongs = function(word){
+    // fetch(`https://api.spotify.com/v1/search?q=${word}&type=track`, {
+    //         method: 'GET', headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + accessToken
+    //         }
+    //     })
+    // musixmatch api key b4d63fd472cf398fa80055160d8b3f36	
+    // fetch(`http://api.digitalpodcast.com/v2r/search/?appid=6dbaef127068f010649588b11f577daf&keywords=${word}`, {
+    //     mode: 'no-cors'}).then(function(response){
+    //     // check that the fetch was successful
+    //     if (response.ok){
+    //         // convert to json
+    //         response.json().then(function(data){
+    //             console.log(data);
+    //         })
+    //     }
+    // })
+//     fetch(`http://api.musixmatch.com/ws/1.1/track.search?f_has_lyrics=${word}`).then(function(response){
+//         if (response.ok){
+//             // convert to json
+//             response.json().then(function(data){
+//                 console.log(data);
+//             })
+//         }
+//     })
+// }
+
+// function to create an element for a list item
 var createHeadingEl = function (headItem, parentEl) {
     // create an h3
     var headingEl = document.createElement("h3");
@@ -185,12 +326,8 @@ var addbutton = function (word, parentContainer) {
 var previousSearchHandler = function (event) {
     var word = event.target.closest(".search-history").textContent;
 
-    // fetch the definition
-    defintionFetch(word);
-    // fetch the synonyms
-    fetchSynonyms(word);
-    // fetch the type of
-    fetchTypeOf(word);
+    // fetch all necessary information
+    allWordFetches(word);
 }
 
  loadSearchHistory(); 
