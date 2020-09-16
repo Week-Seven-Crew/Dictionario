@@ -198,6 +198,8 @@ var fetchMovies = function(word){
     fetch(`https://api.themoviedb.org/3/search/movie?api_key=ea14eb13d395f8e6500e26ec4547d879&language=en-US&query=${word}&page=1&include_adult=false`).then(function(response){
         // check that the fetch was successful
         if (response.ok){
+            // clear the inner html of the container
+            movieContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
                 //console.log(data);
