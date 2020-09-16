@@ -325,6 +325,8 @@ var addbutton = function (word, parentContainer) {
 // making the previous searches clickable 
 var previousSearchHandler = function (event) {
     var word = event.target.closest(".search-history").textContent;
+    // reset information in the search input
+    wordInputEl.value = word;
     // fetch the definition
     defintionFetch(word);
 }
