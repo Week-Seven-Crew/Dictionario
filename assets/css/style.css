@@ -1,0 +1,27 @@
+body {
+    /* font-family: "Comic Sans MS", cursive, sans-serif; */
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+/* makes the page span all the way to the bottom of the screen */
+html, body{
+    padding: 0;
+    margin: 0;
+}
+
+html{
+height: 100%;
+}
+
+body{
+min-height: 100%;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+}
