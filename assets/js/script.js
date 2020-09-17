@@ -12,6 +12,14 @@ var typeOfContainerEl = document.querySelector("#type-of-container");
 var bookContainerEl = document.querySelector("#book-container");
 // select the movie container div
 var movieContainerEl = document.querySelector("#movie-container");
+// select the word container
+var searchedWordContainerEl = document.querySelector("#searched-word-container");
+// select the stats container
+var statsContainerEl = document.querySelector("#stats-container");
+// select filler headers
+var bookFillerEl = document.querySelector("#books-filler");
+var movieFillerEl = document.querySelector("#movie-filler");
+var statsFillerEl = document.querySelector("#stats-filler");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -19,18 +27,21 @@ var searchHistoryEl = document.querySelector("#history-button-container")
 // create list to store searched words 
 var words = [];
 
+//modal container variable
+var modal = document.getElementById("page-modal");
+//modal close variable 
+var modalCloseEl = document.getElementById("modal-close"); 
+
 // function to handle word search
 var wordSearch = function (event) {
     event.preventDefault();
     // get word from input
     var word = wordInputEl.value;
-    // fetch all necessary information
-    allWordFetches(word);
-}
-
-var allWordFetches = function(word){
     // fetch the definition
     defintionFetch(word);
+}
+
+var additionalWordFetches = function(word){
     // fetch the synonyms
     fetchSynonyms(word);
     // fetch the type of
@@ -55,6 +66,10 @@ var defintionFetch = function (word) {
     }).then(function (response) {
         // check that the fetch was successful
         if (response.ok) {
+            // set the word in the searched word container
+            searchedWordContainerEl.innerHTML = `<h1 class="has-text-white has-text-shadow is-size-1 is-capitalized" type="a">${word}</h1>`;
+            // fetch all necessary information
+            additionalWordFetches(word);
             word = word.toLowerCase().trim();
             //check if word is already in the array 
             if (!words.includes(word)) {
@@ -71,6 +86,11 @@ var defintionFetch = function (word) {
             response.json().then(function (data) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
+                // clear out text in stats container
+                statsFillerEl.textContent = "";
+                statsContainerEl.innerHTML = "";
+                // list number of definitions in the stats container
+                createHeadingEl(`Number of definitions: ${data.results.length}`, statsContainerEl);
                 // for each definition
                 // changed data.results.length to 5 to limit number of results
                 var length = data.results.length;
@@ -83,7 +103,16 @@ var defintionFetch = function (word) {
                 }
             })
         }
+        else{
+            // make modal appear by changing class to is-active
+            modal.className = "modal is-active"
+        }
     })
+}
+
+//function to make modal disappear by changing class to just modal
+var closeModal = function() {
+    modal.className = "modal"
 }
 
 // function to fetch synonyms
@@ -101,11 +130,17 @@ var fetchSynonyms = function (word) {
             synonymContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
+                // list number of synonyms in the stats container
+                createHeadingEl(`Number of synonyms: ${data.synonyms.length}`, statsContainerEl);
                 // for each synonym
                 // changed data.synonyms.length to 5 to limit number of results
                 var length = data.synonyms.length;
                 if (length > 5){
                     length = 5;
+                }
+                // check if there are no synonyms
+                if (length === 0){
+                    createHeadingEl("There are no synonyms for this word.", synonymContainerEl)
                 }
                 for (var i = 0; i < length /*data.synonyms.length*/ ; i++) {
                     // create a heading for each synonym
@@ -132,12 +167,18 @@ var fetchTypeOf = function (word) {
             typeOfContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
+                // list number of type os in the stats container
+                createHeadingEl(`Number of type of classifications: ${data.typeOf.length}`, statsContainerEl);
                 //console.log(data);
                 // for each type of
                 // changed data.typeOf.length to 5 to limit number of results
                 var length = data.typeOf.length;
                 if (length > 5){
                     length = 5;
+                }
+                // check if there are no synonyms
+                if (length === 0){
+                    createHeadingEl("There is no type of information for this word.", typeOfContainerEl)
                 }
                 for (var i = 0; i < length /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
@@ -148,15 +189,19 @@ var fetchTypeOf = function (word) {
     })
 }
 
+// function to fetch books
 var fetchBooks = function(word){
     // use the word to fetch books
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${word}`).then(function(response){
         // check that the fetch was successful
         if (response.ok){
             // clear book div innter html
+            bookFillerEl.textContent = "";
             bookContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
+                // list number of books in the stats container
+                createHeadingEl(`Number of books: ${data.totalItems}`, statsContainerEl);
                 //console.log(data);
                 // create div to display number of books with that word in the title
                 var bookNumberEl = document.createElement("h1");
@@ -173,19 +218,25 @@ var fetchBooks = function(word){
                 for (var i = 0; i < 5; i++){
                     var authors = "";
                     var authorArry = data.items[i].volumeInfo.authors;
-                    console.log(authorArry.length);
-                    for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
-                        // if the last item in the list and the list does not only have one item
-                        if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
-                            authors += ", and ";
-                        } 
-                        // if not the first item in the list, add a comma and space
-                        else if (j != 0){
-                            authors += ", ";
+                    //console.log(authorArry.length);
+                    // if the author array is defined, display authors
+                    if (authorArry){
+                        for (var j = 0; j < data.items[i].volumeInfo.authors.length; j++){
+                            // if the last item in the list and the list does not only have one item
+                            if (j === (data.items[i].volumeInfo.authors.length - 1) && (data.items[i].volumeInfo.authors.length != 1)){
+                                authors += ", and ";
+                            } 
+                            // if not the first item in the list, add a comma and space
+                            else if (j != 0){
+                                authors += ", ";
+                            }
+                            authors += data.items[i].volumeInfo.authors[j];
                         }
-                        authors += data.items[i].volumeInfo.authors[j];
+                        createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
+                    } else {
+                        createHeadingEl(`${data.items[i].volumeInfo.title}`, bookContainerEl);
                     }
-                    createHeadingEl(`${data.items[i].volumeInfo.title} by ${authors}`, bookContainerEl);
+                    
                 }
             })
         }
@@ -198,8 +249,13 @@ var fetchMovies = function(word){
     fetch(`https://api.themoviedb.org/3/search/movie?api_key=ea14eb13d395f8e6500e26ec4547d879&language=en-US&query=${word}&page=1&include_adult=false`).then(function(response){
         // check that the fetch was successful
         if (response.ok){
+            // clear the inner html of the container
+            movieFillerEl.textContent = "";
+            movieContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
+                // list number of movies in the stats container
+                createHeadingEl(`Number of movies: ${data.total_results}`, statsContainerEl);
                 //console.log(data);
                 // create div to display number of movies with that word in the title
                 var movieNumberEl = document.createElement("h1");
@@ -252,10 +308,10 @@ var fetchMovies = function(word){
 
 // function to create an element for a list item
 var createHeadingEl = function (headItem, parentEl) {
-    // create a list item or "li" to go into <ol> "ordered list"
-    var headingEl = document.createElement("li");
-    // give it the "is-lower-alpha class
-    headingEl.classList = "mx-5";
+    // create an h3
+    var headingEl = document.createElement("h3");
+    // give it the subtitle class
+    headingEl.classList = "subtitle";
     // set its text content to the definition
     headingEl.textContent = headItem;
     // append the definition to the definition div
@@ -288,19 +344,20 @@ var addbutton = function (word, parentContainer) {
     // creating an element for button 
     var wordButton = document.createElement("button"); 
     //adding classes to our created element
-    wordButton.classList = "button is-text search-history";
+    wordButton.classList = "button is-light is-rounded mx-1 search-history has-box-shadow";
     //adding whatever is in the word variable as text to the wordbutton variable 
     wordButton.textContent = word; 
     //making it show on the page
     parentContainer.appendChild(wordButton);
 
 }
+// making the previous searches clickable 
 var previousSearchHandler = function (event) {
-    //targeting the closest click 
     var word = event.target.closest(".search-history").textContent;
-
-    // fetch all necessary information
-    allWordFetches(word);
+    // reset information in the search input
+    wordInputEl.value = word;
+    // fetch the definition
+    defintionFetch(word);
 }
 
  loadSearchHistory(); 
