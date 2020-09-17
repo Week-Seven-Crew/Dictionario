@@ -14,6 +14,8 @@ var bookContainerEl = document.querySelector("#book-container");
 var movieContainerEl = document.querySelector("#movie-container");
 // select the word container
 var searchedWordContainerEl = document.querySelector("#searched-word-container");
+// select the stats container
+var statsContainerEl = document.querySelector("#stats-container");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -80,6 +82,10 @@ var defintionFetch = function (word) {
             response.json().then(function (data) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
+                // clear out text in stats container
+                statsContainerEl.innerHTML = "";
+                // list number of definitions in the stats container
+                createHeadingEl(`Number of definitions: ${data.results.length}`, statsContainerEl);
                 // for each definition
                 // changed data.results.length to 5 to limit number of results
                 var length = data.results.length;
@@ -119,6 +125,8 @@ var fetchSynonyms = function (word) {
             synonymContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
+                // list number of synonyms in the stats container
+                createHeadingEl(`Number of synonyms: ${data.synonyms.length}`, statsContainerEl);
                 // for each synonym
                 // changed data.synonyms.length to 5 to limit number of results
                 var length = data.synonyms.length;
@@ -150,6 +158,8 @@ var fetchTypeOf = function (word) {
             typeOfContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
+                // list number of type os in the stats container
+                createHeadingEl(`Number of type of classifications: ${data.typeOf.length}`, statsContainerEl);
                 //console.log(data);
                 // for each type of
                 // changed data.typeOf.length to 5 to limit number of results
@@ -176,6 +186,8 @@ var fetchBooks = function(word){
             bookContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
+                // list number of books in the stats container
+                createHeadingEl(`Number of books: ${data.totalItems}`, statsContainerEl);
                 //console.log(data);
                 // create div to display number of books with that word in the title
                 var bookNumberEl = document.createElement("h1");
@@ -227,6 +239,8 @@ var fetchMovies = function(word){
             movieContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
+                // list number of movies in the stats container
+                createHeadingEl(`Number of movies: ${data.total_results}`, statsContainerEl);
                 //console.log(data);
                 // create div to display number of movies with that word in the title
                 var movieNumberEl = document.createElement("h1");
