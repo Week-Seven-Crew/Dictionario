@@ -16,6 +16,10 @@ var movieContainerEl = document.querySelector("#movie-container");
 var searchedWordContainerEl = document.querySelector("#searched-word-container");
 // select the stats container
 var statsContainerEl = document.querySelector("#stats-container");
+// select filler headers
+var bookFillerEl = document.querySelector("#books-filler");
+var movieFillerEl = document.querySelector("#movie-filler");
+var statsFillerEl = document.querySelector("#stats-filler");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -83,6 +87,7 @@ var defintionFetch = function (word) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
                 // clear out text in stats container
+                statsFillerEl.textContent = "";
                 statsContainerEl.innerHTML = "";
                 // list number of definitions in the stats container
                 createHeadingEl(`Number of definitions: ${data.results.length}`, statsContainerEl);
@@ -191,6 +196,7 @@ var fetchBooks = function(word){
         // check that the fetch was successful
         if (response.ok){
             // clear book div innter html
+            bookFillerEl.textContent = "";
             bookContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
@@ -244,6 +250,7 @@ var fetchMovies = function(word){
         // check that the fetch was successful
         if (response.ok){
             // clear the inner html of the container
+            movieFillerEl.textContent = "";
             movieContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
