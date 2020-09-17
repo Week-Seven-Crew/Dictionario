@@ -20,5 +20,6 @@ Then I am presented with information about the word
 # My Finished Product
 Here is the [Deployed Application Link](https://week-seven-crew.github.io/Dictionario/) for my assignment. 
 
+![Alt text](/assets/images/appImage.png?raw=true "Image of Deployed Application")
 
 
