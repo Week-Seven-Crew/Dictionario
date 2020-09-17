@@ -133,6 +133,10 @@ var fetchSynonyms = function (word) {
                 if (length > 5){
                     length = 5;
                 }
+                // check if there are no synonyms
+                if (length === 0){
+                    createHeadingEl("There are no synonyms for this word.", synonymContainerEl)
+                }
                 for (var i = 0; i < length /*data.synonyms.length*/ ; i++) {
                     // create a heading for each synonym
                     createHeadingEl(data.synonyms[i], synonymContainerEl);
@@ -166,6 +170,10 @@ var fetchTypeOf = function (word) {
                 var length = data.typeOf.length;
                 if (length > 5){
                     length = 5;
+                }
+                // check if there are no synonyms
+                if (length === 0){
+                    createHeadingEl("There is no type of information for this word.", typeOfContainerEl)
                 }
                 for (var i = 0; i < length /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
