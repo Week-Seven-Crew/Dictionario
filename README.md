@@ -6,16 +6,12 @@ Background: As a group we wanted to provide an aid for students learning somethi
 AS A Foreign Exchange Student  
 I want to see more information about a word 
 So that I can not only improve my grades in school but also improve my communication and expand my knowledge.  
-
-
  
 # Acceptance Criteria 
  
 GIVEN a dashboard with a form input 
 when I search a word 
 Then I am presented with information about the word
-
-
 
 # My Finished Product
 Here is the [Deployed Application Link](https://week-seven-crew.github.io/Dictionario/) for my assignment. 
