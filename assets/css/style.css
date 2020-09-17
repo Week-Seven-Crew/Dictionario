@@ -1,6 +1,14 @@
+:root{
+    --color1: #204051;
+    --color2: #3b6978;
+    --color3: #84a9ac;
+    --color4: #e4e3e3;
+}
+
 body {
     /* font-family: "Comic Sans MS", cursive, sans-serif; */
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    /* font-family: "Trebuchet MS", Helvetica, sans-serif; */
+    font-family: 'Libre Baskerville', serif;
 }
 
 /* makes the page span all the way to the bottom of the screen */
@@ -17,6 +25,24 @@ body{
 min-height: 100%;
 }
 
+.has-text-shadow {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.hero {
+    color: var(--color1);
+}
+
+.has-background-image { 
+    background-image:  url(../images/dictionary3.jpg);
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
+    background-color: #999;
+}
+
 .footer {
     position: fixed;
     left: 0;
@@ -24,4 +50,67 @@ min-height: 100%;
     width: 100%;
     text-align: center;
     padding: 1rem;
+}
+
+.input {
+    width: auto;
+}
+
+.control {
+    width: 200px;
+}
+
+.field {
+    width: 300px;
+}
+
+.form, .field, .control {
+    display: inline;
+    float: none;
+}
+
+.center-children {
+    text-align: center;
+}
+
+.has-box-shadow {
+    box-shadow: 2px 2px 4px #000000;
+}
+
+.card {
+    background-color: rgba(255,255,255, 0.95);
+}
+
+.past-search-container {
+    width: 70%;
+}
+
+.section-small-padding {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.has-background-gradient {
+    background: linear-gradient(90deg, rgba(5,102,118,1) 0%, rgba(94,170,168,1) 50%, rgba(163,210,202,1) 100%);
+}
+
+.stripe {
+    background: linear-gradient(180deg, var(--color1) 25%, var(--color2) 50%, var(--color3) 75%, var(--color4) 95%, var(--color4) 100%);
+}
+
+.outer {
+    background-size: cover;
+    padding: 0;
+}
+
+.margin-zero {
+    margin: 0;
+}
+
+.color-4 {
+    background-color: var(--color4);
+}
+
+.bottom {
+    padding-bottom: .75rem;
 }

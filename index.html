@@ -4,162 +4,182 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dictionario</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@200&display=swap" rel="stylesheet"> 
   </head>
-  <body class="has-background-primary-light">
-    <!-- Hero Start -->
-    <section class="hero">
-        <div class="container hero-body">
-            <div class="container">
-                <h1 class="title is-1">Dictionario</h1>
-                <h2 class="subtitle">Helping you find words you didn't know you were looking for</h2>
-            </div>
-        </div>
-    </section>
-    <!-- Hero End -->
+  <body class="stripe">
+    <div class="columns margin-zero">
+        <div class="column outer column-left is-1"></div>
+        <div class="column is-10 has-background-image">
+            <!-- Hero Start -->
+            <section class="hero">
+                <div class="container hero-body section-small-padding">
+                    <div class="container center-children">
+                        <h1 class="has-text-shadow title is-1">Dictionario</h1>
+                        <h2 class="has-text-shadow subtitle is-4">Helping you find words you didn't know you were looking for</h2>
+                    </div>
+                </div>
+            </section>
+            <!-- Hero End -->
 
-    <!-- Input Start -->
-    <div class="columns is-centered mb-6">
-        <div class="control has-icons-left">
-            <form id="word-search-form">
-                <input id="word-input" class="input is-primary is-rounded is-focused" type="text" placeholder="Type word here">
-                <span class="icon is-small is-left">
-                    <i class="fas fa-book"></i>
-                </span>  
-            </form>              
-        </div>
-    </div>
-    <!-- Input End -->
-
-    <!-- Alert Modal Start -->
-    <div class="modal" id="page-modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="card">
-                <div class="card-content">
-                    <section class="hero">
-                        <div class="container hero-body">
-                            <div class="container">
-                                <h1 class="title is-1">Word not found.</h1>
-                                <h2 class="subtitle error-container"></h2>
+            <!-- Input Start -->
+            <div class="columns mb-4 mt-5">
+                <div class="column center-children">
+                    <form class="container form" id="word-search-form">
+                        <div class="field">
+                            <div class="control has-icons-left mx-6">
+                                <input id="word-input" class="input is-rounded is-focused center" type="text" placeholder="Type word here">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-book"></i>
+                                </span>
                             </div>
                         </div>
-                    </section>
+                    </form>
                 </div>
             </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close" id="modal-close" onclick="closeModal()"></button>
-    </div>
-    <!-- Alert Modal End -->
+            <!-- Input End -->
 
-    <!-- API Output Containers Start -->
-    <!-- Definition -->
-    <div class="columns is-fluid is-mobile is-multiline is-centered">
-        <!-- Definition -->
-        <div class="column mx-6">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title">Definition</h2>
-                    <ol type="a" id="definitions-container">
-                        <h1 class="content is-medium" type="a">(n) the formal statement of the meaning or significance of a word, phrase, or idiom</h1>
-                    </ol>
+            <!-- Word Searched Start -->
+            <div class="columns is-centered mx-6 mt-3">
+                <div class="column is-narrow mx-4">
+                    <div class="content searched-word-container" id="searched-word-container">
+                        <h1 class="has-text-white has-text-shadow is-size-1 is-capitalized" type="a">searched word</h1>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <!-- Word Searched End -->
 
-    <!-- Synonym / Hyponym Container -->
-    <div class="columns is-mobile is-multiline is-centered is-vcentered">
-        <!-- Synonym -->
-        <div class="column ml-6">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title">Synonym</h2>
-                    <ol type="a" id="synonyms-container">
-                        <h1 class="content is-medium" type="a">a word having the same or nearly the same meaning as another in the same language</h1>
-                    </ol>
+            <!-- Alert Modal Start -->
+            <div class="modal" id="page-modal">
+                <div class="modal-background" id="modal-close" onclick="closeModal()"></div>
+                <div class="modal-content">
+                    <div class="card ">
+                        <button class="modal-close delete" aria-label="close" id="modal-close" onclick="closeModal()"></button>
+                        <div class="modal-card-body">
+                            <div class="container">
+                                <div class="container has-text-centered">
+                                    <h1 class="title is-1">WORD NOT FOUND</h1>
+                                    <h2 class="subtitle error-container">maybe it's mispelled</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <!-- Alert Modal End -->
 
-        <!-- Hyponym -->
-        <div class="column mr-6">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title">Type Of</h2>
-                    <ol type="a" id="type-of-container">
-                        <h1 class="content is-medium" type="a">a term that denotes a subcategory of a more general class</h1>
-                    </ol>
+            <!-- API Output Containers Start -->
+            <!-- Definition -->
+            <div class="columns is-mobile is-centered mx-2">
+                <!-- Definition -->
+                <div class="column">
+                    <div class="card has-box-shadow">
+                        <div class="card-content">
+                            <h2 class="title">Definition</h2>
+                            <ol type="a" id="definitions-container">
+                                <h1 class="content is-medium" type="a">(n) the formal statement of the meaning or significance of a word, phrase, or idiom</h1>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-     </div>
-    <!-- API Output Containers End -->
-    
-    <!-- Bonus Boxes Start -->
-    <div class="columns">
-        <!-- Box no.1 -->
-        <div class="column ml-6">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title">Books</h2>
-                    <h2 type="a" id="book-container">
-                        <h1 class="content is-medium" type="a"></h1>
-                    </h2>
+
+            <!-- Synonym / Hyponym Container -->
+            <div class="columns is-centered is-vcentered mx-2 mb-4">
+                <!-- Synonym -->
+                <div class="column">
+                    <div class="card has-box-shadow">
+                        <div class="card-content">
+                            <h2 class="title">Synonym</h2>
+                            <ol type="a" id="synonyms-container">
+                                <h1 class="content is-medium" type="a">a word having the same or nearly the same meaning as another</h1>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hyponym -->
+                <div class="column">
+                    <div class="card has-box-shadow">
+                        <div class="card-content">
+                            <h2 class="title">Type Of</h2>
+                            <ol type="a" id="type-of-container">
+                                <h1 class="content is-medium" type="a">a term that denotes a subcategory of a more general class</h1>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Box no.2 -->
-        <div class="column">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title">Movies</h2>
-                    <h2 type="a" id="movie-container">
-                        <h1 class="content is-medium" type="a"></h1>
-                    </h2>
+            <!-- API Output Containers End -->
+            
+            <!-- Bonus Boxes Start -->
+            <div class="columns is-desktop is-centered mx-2 mb-6">
+                <!-- Box no.1 -->
+                <div class="column">
+                    <div class="card has-box-shadow">
+                        <div class="card-content">
+                            <h2 class="title">Books</h2>
+                            <h2 type="a" id="book-container">
+                                <h1 class="content is-medium" type="a" id="books-filler">a written or printed work consisting of pages glued or sewn together along one side</h1>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Box no.2 -->
+                <div class="column">
+                    <div class="card has-box-shadow">
+                        <div class="card-content">
+                            <h2 class="title">Movies</h2>
+                            <h2 type="a" id="movie-container">
+                                <h1 class="content is-medium" type="a" id="movie-filler">a story or event recorded by a camera as a set of moving images and accompanying audio</h1>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Box no.3 -->
+                <div class="column">
+                    <div class="card has-box-shadow">
+                        <div class="card-content">
+                            <h2 class="title">Statistics</h2>
+                            <h2 type="a" id="stats-container">
+                                <h1 class="content is-medium" type="a" id="stats-filler">the practice or science of collecting and analyzing numerical data in large quantities</h1>
+                            </h2>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Box no.3 -->
-        <div class="column mr-6">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title">Statistics</h2>
-                    <h2 type="a" id="stats-container">
-                        <h1 class="content is-medium" type="a"></h1>
-                    </h2>
+            <!-- Bonus Boxes End -->
+            
+            <!-- Search History Container Start -->
+            <section class="columns is-centered hero mb-6">
+                <div class="section section-small-padding">
+                    <div class="container past-search-container">
+                        <h1 class="title is-2 has-text-centered has-text-white has-text-shadow">Past Searches</h1>
+                        <div class="container buttons are-medium" id="history-button-container">
+                            <!-- JS Generated History Button Goes Here -->
+                            <!-- Here is how a button should be formatted -->
+                            <!-- <button class="button is-text">Example Button</button> -->
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+            <!-- Search History Container End -->
         </div>
+        <div class="column outer column-right is-1"></div>
     </div>
-    <!-- Bonus Boxes End -->
-    
-    <!-- Search History Container Start -->
-    <div class="columns is-centered">
-        <div class="section">
-            <div class="container">
-                <h1 class="title is-3 has-text-centered">Past Searches</h1>
-                <div class="container" id="history-button-container">
-                    <!-- JS Generated History Button Goes Here -->
-                    <!-- Here is how a button should be formatted -->
-                    <!-- <button class="button is-text">Example Button</button> -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search History Container End -->
 
     <!-- Footer Start -->
-    <footer class="footer">
+    <div class="bottom color-4">
         <div class="content has-text-centered">
             <p>
                 <strong>Dictionario</strong> by <a href="https://github.com/tarrantrl">Rachel Forsyth</a>, <a href="https://github.com/dgib21">Devin Gibson</a>, and <a href="https://github.com/SeymoreBiggins">Zachary Harris</a>.
             </p>
         </div>
-    </footer>
+    </div>
     <!-- Footer End -->
-    
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
