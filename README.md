@@ -11,7 +11,7 @@ So that I can not only improve my grades in school but also improve my communica
  
 # Acceptance Criteria 
  
-GIVEN a dashboard with form inputs 
+GIVEN a dashboard with a form input 
 when I search a word 
 Then I am presented with information about the word
 
