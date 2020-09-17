@@ -12,6 +12,14 @@ var typeOfContainerEl = document.querySelector("#type-of-container");
 var bookContainerEl = document.querySelector("#book-container");
 // select the movie container div
 var movieContainerEl = document.querySelector("#movie-container");
+// select the word container
+var searchedWordContainerEl = document.querySelector("#searched-word-container");
+// select the stats container
+var statsContainerEl = document.querySelector("#stats-container");
+// select filler headers
+var bookFillerEl = document.querySelector("#books-filler");
+var movieFillerEl = document.querySelector("#movie-filler");
+var statsFillerEl = document.querySelector("#stats-filler");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -58,6 +66,8 @@ var defintionFetch = function (word) {
     }).then(function (response) {
         // check that the fetch was successful
         if (response.ok) {
+            // set the word in the searched word container
+            searchedWordContainerEl.innerHTML = `<h1 class="has-text-white has-text-shadow is-size-1 is-capitalized" type="a">${word}</h1>`;
             // fetch all necessary information
             additionalWordFetches(word);
             word = word.toLowerCase().trim();
@@ -76,6 +86,11 @@ var defintionFetch = function (word) {
             response.json().then(function (data) {
                 // clear out the text content in the definitions container
                 definitionContainerEl.innerHTML = "";
+                // clear out text in stats container
+                statsFillerEl.textContent = "";
+                statsContainerEl.innerHTML = "";
+                // list number of definitions in the stats container
+                createHeadingEl(`Number of definitions: ${data.results.length}`, statsContainerEl);
                 // for each definition
                 // changed data.results.length to 5 to limit number of results
                 var length = data.results.length;
@@ -89,19 +104,15 @@ var defintionFetch = function (word) {
             })
         }
         else{
-                //make modal appear
-            modal.style.display = "block";
-            
-            
-
+            // make modal appear by changing class to is-active
+            modal.className = "modal is-active"
         }
     })
 }
 
-//function to make modal disappear 
+//function to make modal disappear by changing class to just modal
 var closeModal = function() {
-
-    modal.style.display = "none"; 
+    modal.className = "modal"
 }
 
 // function to fetch synonyms
@@ -119,11 +130,17 @@ var fetchSynonyms = function (word) {
             synonymContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
+                // list number of synonyms in the stats container
+                createHeadingEl(`Number of synonyms: ${data.synonyms.length}`, statsContainerEl);
                 // for each synonym
                 // changed data.synonyms.length to 5 to limit number of results
                 var length = data.synonyms.length;
                 if (length > 5){
                     length = 5;
+                }
+                // check if there are no synonyms
+                if (length === 0){
+                    createHeadingEl("There are no synonyms for this word.", synonymContainerEl)
                 }
                 for (var i = 0; i < length /*data.synonyms.length*/ ; i++) {
                     // create a heading for each synonym
@@ -150,12 +167,18 @@ var fetchTypeOf = function (word) {
             typeOfContainerEl.innerHTML = "";
             // convert response to json
             response.json().then(function (data) {
+                // list number of type os in the stats container
+                createHeadingEl(`Number of type of classifications: ${data.typeOf.length}`, statsContainerEl);
                 //console.log(data);
                 // for each type of
                 // changed data.typeOf.length to 5 to limit number of results
                 var length = data.typeOf.length;
                 if (length > 5){
                     length = 5;
+                }
+                // check if there are no synonyms
+                if (length === 0){
+                    createHeadingEl("There is no type of information for this word.", typeOfContainerEl)
                 }
                 for (var i = 0; i < length /*data.typeOf.length*/ ; i++) {
                     // create a heading for each type of
@@ -173,9 +196,12 @@ var fetchBooks = function(word){
         // check that the fetch was successful
         if (response.ok){
             // clear book div innter html
+            bookFillerEl.textContent = "";
             bookContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
+                // list number of books in the stats container
+                createHeadingEl(`Number of books: ${data.totalItems}`, statsContainerEl);
                 //console.log(data);
                 // create div to display number of books with that word in the title
                 var bookNumberEl = document.createElement("h1");
@@ -224,9 +250,12 @@ var fetchMovies = function(word){
         // check that the fetch was successful
         if (response.ok){
             // clear the inner html of the container
+            movieFillerEl.textContent = "";
             movieContainerEl.innerHTML = "";
             // convert to json
             response.json().then(function(data){
+                // list number of movies in the stats container
+                createHeadingEl(`Number of movies: ${data.total_results}`, statsContainerEl);
                 //console.log(data);
                 // create div to display number of movies with that word in the title
                 var movieNumberEl = document.createElement("h1");
@@ -315,7 +344,7 @@ var addbutton = function (word, parentContainer) {
     // creating an element for button 
     var wordButton = document.createElement("button"); 
     //adding classes to our created element
-    wordButton.classList = "button is-text search-history";
+    wordButton.classList = "button is-light is-rounded mx-1 search-history has-box-shadow";
     //adding whatever is in the word variable as text to the wordbutton variable 
     wordButton.textContent = word; 
     //making it show on the page
