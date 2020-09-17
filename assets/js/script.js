@@ -12,6 +12,8 @@ var typeOfContainerEl = document.querySelector("#type-of-container");
 var bookContainerEl = document.querySelector("#book-container");
 // select the movie container div
 var movieContainerEl = document.querySelector("#movie-container");
+// select the word container
+var searchedWordContainerEl = document.querySelector("#searched-word-container");
 
 // search history container  
 var searchHistoryEl = document.querySelector("#history-button-container")
@@ -58,6 +60,8 @@ var defintionFetch = function (word) {
     }).then(function (response) {
         // check that the fetch was successful
         if (response.ok) {
+            // set the word in the searched word container
+            searchedWordContainerEl.innerHTML = `<h1 class="has-text-white has-text-shadow is-size-1 is-capitalized" type="a">${word}</h1>`;
             // fetch all necessary information
             additionalWordFetches(word);
             word = word.toLowerCase().trim();
